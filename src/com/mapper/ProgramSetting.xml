@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+	<mapper namespace="com.mapper.ProgramSetting">
+		<sql id="ProQuery">
+  			proid,proname,starttime,endtime
+		</sql>
+		<sql id="renjiEle">
+		renid,renname,roleid,depid
+		</sql>
+ 			<select id="QueryPro" useCache="true" parameterType="com.pojo.ProData" 
+  			resultType="com.pojo.ProData">
+ 				select
+ 					<include refid="ProQuery"/>
+ 						from pro where prostate=1
+    						<if test="proid!=''">
+    						    AND proid=#{proid,jdbcType=VARCHAR}
+    						</if>
+    						<if test="proname!=''">
+    						    AND proname LIKE '%${proname}%' 						
+    						    </if>
+    						<if test="starttime!=null">
+    						<![CDATA[
+    						   	AND starttime >= #{starttime,jdbcType=DATE}
+    						 ]]>
+    						</if>
+    						<if test="endtime!=null">
+    						<![CDATA[
+    							AND endtime <= #{endtime,jdbcType=DATE}
+    						]]>
+    						</if>
+    					
+ 			</select>
+ 			
+ 			<delete id="DeletePro" parameterType="com.pojo.ProData">
+ 				update PRO set prostate=0 where proid=#{proid}
+ 			</delete>
+ 			
+ 			<insert id="InsertPro" parameterType="com.pojo.ProData">
+ 				insert into pro values(#{proid},#{proname},#{starttime},#{endtime},1)
+ 			</insert>
+ 			
+ 			 <select id="QueryByProid" parameterType="com.pojo.ProData" resultType="com.pojo.ProData">
+  				select
+  					<include refid="ProQuery"/>
+  						from pro 
+  					   where prostate=1
+  							<if test="proid!=null">
+  								and proid=#{proid}
+  							</if>
+  			</select>
+            <select id="QueryRenjiByproid"   resultType="com.pojo.Renyuandata">
+             	select 
+             		<include refid="renjiEle"/>
+             			from renyuan where renstate=1
+            
+            </select>
+  			<update id="UpdatePro" parameterType="com.pojo.ProData">
+  				update PRO set proname=#{proname},starttime=#{starttime},endtime=#{endtime} where proid=#{proid}
+  			</update>
+  			<insert id="InsertPRPji" parameterType="com.pojo.PRPjiData">
+  				insert into prpji values(#{prp_name},#{proid})
+  			</insert>
+  			<select id="QueryRennameById" parameterType="com.pojo.Renyuandata" resultType="com.pojo.Renyuandata">
+  			select renname,roleid from renyuan where renid=#{renid}
+  			</select>
+  			<insert id="InsertRenyuanji" parameterType="com.pojo.RenjiData">
+  			insert into renyuanji values(#{renid},#{renname},#{proid},#{proroleid},#{state},#{depid},#{upid})
+  			</insert>
+  			<update id="BusyRen" parameterType="com.pojo.Renyuandata">
+  			update renyuan set renstate=0 where proid=#{proid}
+  			</update>
+</mapper>

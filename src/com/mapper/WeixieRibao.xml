@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.WeixieRibao">
+
+	<select id="weixie" resultType="com.pojo.Ribaodata"
+		parameterType="java.lang.String">
+		select uptime
+		from ribao
+		where
+		renid=#{renid,jdbcType=VARCHAR}
+	</select>
+
+	<select id="weishenhe" resultType="com.pojo.Ribaodata"
+		parameterType="java.lang.String">
+		select *
+		from ribao
+		where
+		renid=#{renid,jdbcType=VARCHAR}
+		and shenstate='未通过'
+	</select>
+
+
+</mapper>

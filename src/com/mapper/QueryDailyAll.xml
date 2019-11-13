@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.QueryDailyAll">
+
+<!-- 将属性名与数据库中列名一一对应  -->
+  <resultMap id="BaseResultMap" type="com.pojo.Ribaodata" >
+    <result column="uptime" property="uptime" jdbcType="DATE" />
+    <result column="renname" property="renname" jdbcType="VARCHAR" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 查询周报 -->
+	<select id="querydailyall" resultMap="BaseResultMap"
+		parameterType="com.pojo.Ribaodata">
+		select renname,context
+		from ribao
+		<!-- trunc()函数为截取年月日，因bewteen查询包括前后数据 只减6天 -->
+		where 1=1
+		and trunc(uptime) = #{uptime,jdbcType=DATE}
+	</select>
+	
+</mapper>

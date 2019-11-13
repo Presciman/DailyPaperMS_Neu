@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.AddPaper">
+
+	
+  <select id="findrennameByid" useCache="true" parameterType="java.lang.String" 
+  			resultType="java.lang.String" >
+  	select renname from renyuan where renid = #{renid,jdbcType=VARCHAR}
+  </select>
+   <select id="finddepidByid" useCache="true" parameterType="java.lang.String" 
+  			resultType="java.lang.String" >
+  	select depid from renyuan where renid = #{renid,jdbcType=VARCHAR}
+  </select>
+  <select id="findpronameByid" useCache="true" parameterType="java.lang.String" 
+  			resultType="java.lang.String" >
+  	select proname from pro where proid = #{proid,jdbcType=VARCHAR}
+  </select>
+  <insert id="insertRibao" parameterType="com.pojo.Ribaodata">
+    insert into ribao  (baoid,
+    proid,proname,proprp,
+    context,workload,addtime,uptime,renid,renname,upid,depid)
+    values(#{baoid},#{proid},#{proname},#{proprp},#{context},
+    #{workload},#{addtime},#{uptime},#{renid},#{renname},#{upid},#{depid})
+  </insert>
+</mapper>

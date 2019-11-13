@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.PRP">
+<sql id="PRPQuery">
+  prp_id,prp_short,prp_name
+</sql>
+  <select id="QueryPRP" useCache="true" parameterType="com.pojo.PRPData" 
+  			resultType="com.pojo.PRPData" >
+  
+  select
+  <include refid="PRPQuery"/>
+  from PRP where 
+   <if test="prp_short!=''">
+    PRP_SHORT=#{prp_short}
+   </if>
+   <if test="prp_short==''">
+    1=1
+   </if>
+    and PRP_STATE=1
+  </select>
+  <select id="SelectById" parameterType="com.pojo.PRPData" resultType="com.pojo.PRPData" >
+  select 
+  <include refid="PRPQuery"/>
+  from PRP where PRP_ID=#{prp_id}
+  </select>
+  <insert id="InsertPRP" parameterType="com.pojo.PRPData">
+  insert into PRP values(prp_seq.nextval,#{prp_short},#{prp_name},1)
+  </insert>
+  
+  <delete id="DeletePRP" parameterType="com.pojo.PRPData">
+  update PRP set PRP_STATE=0 where PRP_ID=#{prp_id}
+  </delete>
+  <update id="UpdatePRP" parameterType="com.pojo.PRPData">
+  update PRP set PRP_SHORT=#{prp_short},PRP_NAME=#{prp_name} where PRP_ID=#{prp_id}
+  </update>
+  <select id="SelectNameStateByID" parameterType="com.pojo.PRPData" resultType="com.pojo.PRPData">
+  select PRP_NAME from PRP where PRP_NAME=#{prp_name} and PRP_STATE=1
+  </select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.QueryRibao">
+
+	<!-- 将属性名与数据库中列名一一对应 -->
+	<resultMap id="BaseResultMap" type="com.pojo.Ribaodata">
+		<result column="uptime" property="uptime" jdbcType="DATE" />
+		<result column="renid" property="renid" jdbcType="VARCHAR" />
+		<result column="workload" property="workload" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 查询个人日报 -->
+	<select id="queryRibao" resultMap="BaseResultMap" parameterType="String">
+		select 
+		baoid,proid,proprp,workload,addtime,
+       uptime,upid,shenstate 
+		from ribao
+		where renid = #{renid,jdbcType=VARCHAR}
+	</select>
+	<select id="queryRibaoBytiaojian" resultType="com.pojo.Ribaodata" parameterType="date">
+		select 
+		baoid,proid,proprp,workload,addtime,
+       uptime,upid,shenstate 
+		from ribao
+		where uptime between #{0,jdbcType=DATE} and #{1,jdbcType=DATE}
+	</select>
+	<delete id="deleteRibao" parameterType="String">
+	
+		delete  from ribao
+		where baoid= #{baoid,jdbcType=VARCHAR} 
+	</delete>
+	
+	<update id="updateRibao" parameterType="com.pojo.Ribaodata" >
+       update ribao 
+       set   proid=#{proid},proname=#{proname},proprp=#{proprp},
+       context=#{context},workload=#{workload},addtime=#{addtime},
+       uptime=#{uptime},renid=#{renid},renname=#{renname},upid=#{upid},depid=#{depid}
+       where baoid = #{baoid}
+       
+  </update>
+
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ShenHeMapper">
+<sql id="dailyQuery">
+    baoid,proname,proprp,context,workload,addtime,uptime,renid,renname,shenstate,reason </sql>
+  
+  
+  <!-- 查询审核日报 -->
+	<select id="queryShenDaily" resultType="com.pojo.Ribaodata" parameterType="com.pojo.ShenheData">
+		select 
+		<include refid="dailyQuery"/>
+		from ribao 
+		where  1=1 
+       <if test="  renName != null and renName != 'null' and renName != ''">
+       and renname = #{renName}
+       </if> 
+         <if test="  shenstate != null and shenstate != 'null' and shenstate != ''">
+       and shenstate=#{shenstate}
+       </if>   
+       <if test="  upId != null and upId != 'null' and upId != ''">
+       and upId=#{upId}
+       </if>  
+        <if test="  renId != null and renId != 'null' and renId!= ''">
+       and renId=#{renId}
+       </if> 
+       <if test="  stime != null and stime != 'null' and stime != ''">
+           <if test="etime != null and etime != 'null' and etime != ''">
+           
+           and  uptime between #{stime,jdbcType=DATE} and #{etime,jdbcType=DATE}
+           </if>
+       
+       </if>            
+    
+	</select>
+	
+	<!-- 按ＩＤ按查询审核日报 -->
+	<select id="queryShenDailyById" resultType="com.pojo.Ribaodata" parameterType="java.lang.String">
+		select 
+		<include refid="dailyQuery"/>
+		from ribao 
+		where baoid = #{ribaoid}
+	<!-- <where>
+       <if test="renName!=''">
+       renname=#{renName}
+       </if> 
+       <if test="state!=''">
+       shenstate=#{state}
+       </if>       
+   </where> -->
+	</select>
+	
+	<!-- 批量审核 -->
+	<update id="shenPDaily" parameterType="com.pojo.PshenHe">
+	    update  ribao
+	    set shenstate = #{caoZuo} , reason = #{reason}
+	    where baoid = #{ids}  
+	</update>
+</mapper>
+ 

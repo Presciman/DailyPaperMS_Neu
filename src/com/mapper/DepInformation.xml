@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.DepInformation">
+  <select id="query"  parameterType="java.lang.String" 
+  			resultType="com.pojo.DepData" >
+  	select * from dep where depname =#{name}
+  </select>
+  
+  <select id="queryDepAll" resultType="com.pojo.DepData" parameterType="java.lang.String">
+     select depid,depname,zhu from dep 
+     where proid = #{proid}  
+     or depid = '0'
+  </select>
+  
+  <select id="queryDepAllByPro" resultType="com.pojo.DepData">
+     select depid,depname,zhu,proid from dep 
+     where proid = #{proid}
+  </select>
+  
+   <update id="updateDep" parameterType="com.pojo.DepData" >
+       update dep 
+       set   depname=#{depName},zhu=#{zhu} 
+       where depid=#{depID}
+  </update>
+  
+  <insert id="saveDep" parameterType="com.pojo.DepData"  >
+  		insert into dep(depid,depname,zhu,proid)values(#{depID},#{depName},#{zhu},#{proid})
+  </insert>
+  
+  <delete id="deleteDep"  parameterType="java.lang.String">
+         delete from dep where  depid = #{depid}
+  </delete>
+</mapper>

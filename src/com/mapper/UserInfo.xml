@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.UserInfo">
+	<select id="selectuser" resultType="com.pojo.userData">
+		select username from RUser
+	</select>
+
+
+	<select id="selectpassword" parameterType="java.lang.String"
+		resultType="com.pojo.userData">
+		select username , depid,password from RUser where
+		username=#{username,jdbcType=VARCHAR}
+	</select>
+
+
+
+	<update id="updatepassword" parameterType="com.pojo.userData">
+		update RUser
+		set
+		password=#{password,jdbcType=VARCHAR},depid=#{depid,jdbcType=VARCHAR}
+		where username=#{username,jdbcType=VARCHAR}
+	</update>
+</mapper>

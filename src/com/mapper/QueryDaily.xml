@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.QueryDaily">
+
+	<!-- 将属性名与数据库中列名一一对应 -->
+	<resultMap id="BaseResultMap" type="com.pojo.DailyData">
+		<result column="uptime" property="uptime" jdbcType="DATE" />
+		<result column="renid" property="renid" jdbcType="VARCHAR" />
+		<result column="workload" property="workload" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 查询个人日报按时间 -->
+	<select id="querydaily" resultType="com.pojo.Ribaodata"
+		parameterType="com.pojo.DailyData">
+		select *
+		from ribao
+		where
+		renid=#{renid,jdbcType=DATE} and
+		uptime between #{btime,jdbcType=DATE}
+		and
+		#{atime,jdbcType=VARCHAR}
+
+	</select>
+
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ProWorks">
+
+	<!-- 将属性名与数据库中列名一一对应 -->
+	<resultMap id="BaseResultMap" type="com.pojo.RibaoDepji">
+		<result column="atime" property="atime" jdbcType="DATE" />
+		<result column="proname" property="proname" jdbcType="VARCHAR" />
+		<result column="btime" property="btime" jdbcType="DATE" />
+	</resultMap>
+
+	<!-- 查询个人日报按时间 -->
+	<select id="queryproworks" resultType="com.pojo.RibaoDepji"
+		parameterType="com.pojo.RibaoDepji">
+		select * from ribao r where proname=
+		#{proname,jdbcType=VARCHAR} and uptime
+		between
+		#{btime,jdbcType=DATE}
+		and #{atime,jdbcType=DATE}
+	</select>
+
+
+</mapper>
