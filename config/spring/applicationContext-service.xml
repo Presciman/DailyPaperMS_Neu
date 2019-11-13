@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+
+	<!-- 各种service -->
+	<bean id="loginService" class="com.service.impl.loginServiceimpl" />
+	<bean id="DailyService" class="com.service.impl.QueryDailyServiceImpl" />
+	<bean id="RiBaoService" class="com.service.impl.RiBaoServiceImpl" />
+	<!-- 杨嘉钦 -->
+	<bean id="WeeklyService" class="com.service.impl.QueryWeeklyServiceImpl"/>
+	<bean id="DailyAllService" class="com.service.impl.QueryDailyAllServiceImpl"/>
+	<bean id="DepWorkloadService" class="com.service.impl.QueryDepWorkloadServiceImpl"/>
+	
+</beans>
